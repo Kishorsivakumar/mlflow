@@ -3,6 +3,14 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.datasets import load_wine
 from sklearn.model_selection import train_test_split
 
+import dagshub
+dagshub.init(repo_owner='Kishorsivakumar', repo_name='mlflow', mlflow=True)
+
+import mlflow
+with mlflow.start_run():
+  mlflow.log_param('parameter name', 'value')
+  mlflow.log_metric('metric name', 1)
+
 # Enable autologging
 mlflow.sklearn.autolog()
 
@@ -11,6 +19,7 @@ wine = load_wine()
 X_train, X_test, y_train, y_test = train_test_split(
     wine.data, wine.target, test_size=0.2, random_state=42
 )
+
 
 # Train model - MLflow automatically logs everything!
 with mlflow.start_run():
